@@ -1,0 +1,101 @@
+## Set PATH to bin directory
+PATH = /mysql/mysql8019/bin:$PATH
+
+## execute mysqlsh
+
+## Creating instances and boot them
+dba.deploySandboxInstance(3330)
+dba.deploySandboxInstance(3331)
+
+## Configure instances
+dba.configureReplicaSetInstance('root@localhost:3330')
+dba.configureReplicaSetInstance('root@localhost:3331')
+
+## Once quit mysqlsh
+
+## Connecting to primary instance and execute SQL
+mysqlsh root@localhost:3330 -p < /Users/mikoma/world_x.sql 
+
+## Connecting to primary instance
+\c root@localhost:3330
+
+## [On PRIMARY]
+## Creating ReplicaSet
+dba.createReplicaSet('repl1') 
+
+## Tab completion does not work for dba.getReplicaSet().
+rs=dba.getReplicaSet()
+
+## Check status of ReplicaSet
+## "type" should be "ASYNC"
+rs.status() 
+
+## Check config of additional instance
+dba.checkInstanceConfiguration("root@localhost:3331")
+
+## Adding secondary instance
+## Choose "Clone"
+rs.addInstance("root@localhost:3331")
+
+
+## Stop PRIMARY
+dba.stopSandboxInstance(3330)
+
+## Connect to SECONDARY instance
+\c root@localhost:3331
+
+## [On SECONDARY]
+## Check status of ReplicaSet
+dba.getReplicaSet().status()
+
+## Trying to promote SECONDARY to new PRIMARY
+## Error due to no running PRIMARY
+rs=dba.getReplicaSet()
+rs.setPrimaryInstance("root@localhost:3331")
+
+## Force promote SECONDARY to new SECONDARY
+rs.forcePrimaryInstance("root@localhost:3331")
+dba.getReplicaSet().status()
+
+## Try to start ex-PRIMARY
+dba.startSandboxInstance(3330)
+
+## Warning and Error 
+dba.getReplicaSet().status()
+
+## Rejoin ex-PRIMARY as new SECONDARY
+rs.rejoinInstance("root@localhost:3330")
+
+## Failover completed
+dba.getReplicaSet().status()
+
+
+## [MySQL Router]
+## Bootstrapping MySQL Router
+$ mysqlrouter --bootstrap root@localhost:3331 --directory /tmp/myrouter' option
+
+## See details-> https://dev.mysql.com/doc/mysql-router/8.0/en/mysql-router-deploying-sandbox.html
+
+## Start 
+cd /tmp/myrouter
+./start.sh
+## Otherwise sudo systemctl start mysqlrouter
+
+## Start MySQL Router
+$ mysqlsh root@localhost:64460
+
+## Connecting via MySQL Router
+\c root@localhost:64460
+
+## Check MySQL instance by port number 
+session.runSql("SELECT @@port") **??? 3331 is correct?
+
+
+## getReplicaset object again
+rs=dba.getReplicaSet()
+
+## Switch primary
+rs.setPrimaryInstance("root@localhost:3330")
+
+## Check MySQL instance by port number 
+session.runSql("SELECT @@port")
