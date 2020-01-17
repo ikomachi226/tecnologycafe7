@@ -1,6 +1,9 @@
 ## Set PATH to bin directory
 PATH = /mysql/mysql8019/bin:$PATH
 
+##If you need sample data please download from here.
+## https://dev.mysql.com/doc/index-other.html
+
 ## execute mysqlsh
 
 ## Creating instances and boot them
