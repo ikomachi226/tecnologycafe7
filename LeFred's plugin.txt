@@ -1,0 +1,99 @@
+Githubに公開されているプラグイン一覧(2020/1/10現在)
+https://github.com/lefred/mysqlshell-plugins
+
+1.	check
+      getBinlogs([session])
+            Prints the list of binary logs available on the server
+
+      getBinlogsIO([session])
+            Prints the IO statistics of binary logs files available on the
+            server
+
+      getFullTableScanQuery([limit][, select][, schema][, session])
+            Prints the queries performing full table scans
+
+      getQueryMostRowAffected([limit][, schema][, session])
+            Prints the statements affecting the most rows
+
+      getQueryTempDisk([limit][, schema][, session])
+            Prints the queries using temporary tables on disk
+
+      getQueryUpdatingSamePK([limit][, schema][, session])
+            Prints the statements updating mostly the same PK and therefore
+            having to wait more (hotspot)
+
+      getSlowerQuery([limit][, select][, schema])
+            Prints the slowest queries. If the limit is one you can also see
+            all the details about the query
+
+      getTrxWithMostRowsAffected([limit][, schema][, session])
+            Prints the transaction with the most amount of statements
+
+      getTrxWithMostStatements([limit][, schema][, session])
+            Prints the transaction with the most amount of statements
+
+      showTrxSize([binlog][, session])
+            Prints Transactions Size from a binlog
+
+      showTrxSizeSort([limit][, binlog][, session])
+            Prints Transactions Size from a binlog
+
+2.	collations
+     nonUnique(table, column, collation[, schema][, session])
+          Find non-unique values in a column for a given collation
+
+     outOfOrder(table, column, collation[, schema][, session])
+          Find values in a column that becomes out of order for a given collation
+
+3.	connect
+      mycnf([mysqlx][, file])
+            Connect to MySQL using old .my.cnf file
+
+4.	innodb
+         getAlterProgress([session])
+            Prints InnoDB Alter progress info
+
+      getFragmentedTables([percent][, session])
+            Prints InnoDB fragmented tables
+
+      getFragmentedTablesDisk([percent][, session])
+            Prints InnoDB fragmented tables with disk info
+
+      getTablesInBP([session])
+            Prints Tables in BP with some statistics
+
+5.	innodb_cluster
+      showGroupReplicationSpeed([limit][, session])
+            Prints Transactions Size from a binlog
+
+6.	maintenance
+      shutdown([session])
+            Stop the instance using Std Protocol
+
+7.	proxysql
+      create(uri)
+            Create the ProxySQL Object
+
+8.	router
+      create(ip, port, user[, password])
+            Create the MySQL Router Object
+
+9.	schema
+      showProcedures([schema][, session])
+            Lists all stored procedures.
+
+10.	Security
+      showAuthMethods([user][, session])
+            Lists all specified authentication method and the amount of users
+            using it.
+
+      showPasswordExpire([show_expire][, session])
+            Lists all accounts and their expiration date
+
+      showPasswordExpireSoon([expire_in_days][, session])
+            Lists all accounts that will expire in specific days
+
+11.	support
+      fetchInfo([mysql][, os][, advices][, session])
+            Fetch info from the system
+
