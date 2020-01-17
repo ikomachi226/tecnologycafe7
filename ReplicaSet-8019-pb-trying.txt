@@ -91,7 +91,7 @@ $ mysqlsh root@localhost:64460
 \c root@localhost:64460
 
 ## Check MySQL instance by port number 
-session.runSql("SELECT @@port") **??? 3331 is correct?
+session.runSql("SELECT @@port")
 
 
 ## getReplicaset object again
@@ -102,3 +102,13 @@ rs.setPrimaryInstance("root@localhost:3330")
 
 ## Check MySQL instance by port number 
 session.runSql("SELECT @@port")
+
+## Delete Sandbox
+dba.stopSandboxInstance(3330)
+dba.stopSandboxInstance(3331)
+dba.deleteSandboxInstance(3330)
+dba.deleteSandboxInstance(3331)
+
+## Check status
+## It mentioned "MySQL server has gone away"
+rs=dba.getReplicaSet()
