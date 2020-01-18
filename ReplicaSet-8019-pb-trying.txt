@@ -75,7 +75,7 @@ dba.getReplicaSet().status()
 
 ## [MySQL Router]
 ## Bootstrapping MySQL Router
-$ mysqlrouter --bootstrap root@localhost:3331 --directory /tmp/myrouter' option
+$ mysqlrouter --bootstrap root@localhost:3331 --directory /tmp/myrouter
 
 ## See details-> https://dev.mysql.com/doc/mysql-router/8.0/en/mysql-router-deploying-sandbox.html
 
